@@ -38,7 +38,7 @@ public:
     // Destructor - CRITICAL for memory management!
     // TODO: Implement in Player.cpp
     // HINT: Must delete all items in inventory
-    ~Player();
+    virtual ~Player();
     
     // Override displayStats from Character
     // TODO: Implement in Player.cpp

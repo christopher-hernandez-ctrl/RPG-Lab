@@ -4,6 +4,7 @@
 #include "Character.h"
 #include "Item.h"
 #include <vector>
+#include <cstdlib>
 
 /**
  * Monster class - Base class for all enemy monsters
@@ -96,6 +97,36 @@ public:
     
     // Override calculateDamage to add fire damage bonus
     // TODO: Implement in Monster.cpp
+    int calculateDamage() const;
+};
+
+
+class Ghost : public Monster {
+public:
+    // TODO: Implement in Monster.cpp
+    Ghost();
+    
+    // Override attack message
+    // TODO: Implement in Monster.cpp
+    std::string getAttackMessage() const;
+    
+    // Override calculateDamage to add to attack
+    // TODO: Implement in Monster.cpp
+    int takeDamage() const;
+};
+
+
+class Troll : public Monster {
+public:
+    Troll();
+    std::string getAttackMessage() const;
+    //int calculateDamage() const;
+};
+
+class Wizard : public Monster {
+public:
+    Wizard();
+    std::string getAttackMessage() const;
     int calculateDamage() const;
 };
 

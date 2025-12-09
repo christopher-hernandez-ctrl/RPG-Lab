@@ -25,6 +25,10 @@ Monster::Monster(const std::string& name, int hp, int attack, int defense,
 // - Clear the vector after deleting items
 //
 Monster::~Monster() {
+    for (size_t i = 0; i < loot_table.size(); i++) {
+        delete loot_table[i];
+    }
+    loot_table.clear();
 }
 
 
@@ -36,6 +40,7 @@ Monster::~Monster() {
 //
 void Monster::displayStats() const {
     // TODO: Display monster stats
+    std::cout << getName() << " [HP: " << getCurrentHP() << "/" << getMaxHP() << "]" << std::endl;
 }
 
 
@@ -46,6 +51,9 @@ void Monster::displayStats() const {
 //
 void Monster::addLoot(Item* item) {
     // TODO: Add item to loot table
+    if (item) {
+        loot_table.push_back(item);
+    }
 }
 
 
@@ -58,7 +66,8 @@ void Monster::addLoot(Item* item) {
 //
 std::vector<Item*> Monster::dropLoot() {
     // TODO: Return loot and transfer ownership
-    std::vector<Item*> empty;
+    std::vector<Item*> empty = loot_table;
+    loot_table.clear(); 
     return empty;  // REPLACE THIS
 }
 
@@ -70,8 +79,8 @@ std::vector<Item*> Monster::dropLoot() {
 // - Use getName() to get monster's name
 //
 std::string Monster::getAttackMessage() const {
-    // TODO: Return attack message
-    return "";  // REPLACE THIS
+    // TODO: Return attack message  
+    return getName() + " attacks!";  // REPLACE THIS
 }
 
 
@@ -94,6 +103,7 @@ std::string Monster::getAttackMessage() const {
 Goblin::Goblin() 
     : Monster("Goblin", 30, 5, 2, 10, 5) {
     // TODO: Add loot items
+    addLoot(new Consumable("Basic Potion", "Restores 10 HP", 10));
 }
 
 
@@ -104,7 +114,7 @@ Goblin::Goblin()
 //
 std::string Goblin::getAttackMessage() const {
     // TODO: Return goblin attack message
-    return "";  // REPLACE THIS
+    return "The goblin swipes at you with its rusty dagger!";  // REPLACE THIS
 }
 
 
@@ -126,8 +136,8 @@ std::string Goblin::getAttackMessage() const {
 Skeleton::Skeleton()
     : Monster("Skeleton", 40, 8, 4, 20, 10) {
     // TODO: Add loot items
+    addLoot (new Weapon("Old Sword", "An old rusted sword", 4));
 }
-
 
 // TODO: Override getAttackMessage for Skeleton
 // HINTS:
@@ -136,7 +146,7 @@ Skeleton::Skeleton()
 //
 std::string Skeleton::getAttackMessage() const {
     // TODO: Return skeleton attack message
-    return "";  // REPLACE THIS
+    return "The skeleton rattles its bones and slashes with a sword!";  // REPLACE THIS
 }
 
 
@@ -161,6 +171,9 @@ std::string Skeleton::getAttackMessage() const {
 Dragon::Dragon()
     : Monster("Dragon", 150, 20, 10, 100, 50) {
     // TODO: Add legendary loot items
+    addLoot (new Weapon("Dragon Slayer Sword", "A mighty glowing sword that slays dragons", 10));
+    addLoot (new Armor("Dragon Scale Armor", "Armor crafted from the scales of a dragon", 8));
+    addLoot (new Consumable("Greater Health Potion", "Restores 100 HP", 100));
 }
 
 
@@ -171,7 +184,7 @@ Dragon::Dragon()
 //
 std::string Dragon::getAttackMessage() const {
     // TODO: Return dragon attack message
-    return "";  // REPLACE THIS
+    return "The dragon shows you who's boss and breathes fire at you!";  // REPLACE THIS
 }
 
 
@@ -184,5 +197,50 @@ std::string Dragon::getAttackMessage() const {
 //
 int Dragon::calculateDamage() const {
     // TODO: Calculate damage with fire bonus
-    return 0;  // REPLACE THIS
+    return Monster::calculateDamage() + 5;  // REPLACE THIS
+}
+
+
+//Ghost class implementation
+Ghost::Ghost()
+    : Monster("Ghost", 50, 10, 3, 30, 15) {
+        addLoot(new Consumable("Ghostly Elixir", "A mysterious substance that restores 30 HP", 30));
+}
+std::string Ghost::getAttackMessage() const {
+    return "The ghost lets out a chilling wail and attacks you!";
+}
+int Ghost::takeDamage() const {
+    if (rand() % 2 == 0) {
+        std::cout << "The ghost's translucent body dodges your attack!" << std::endl;
+        return 0;
+    }
+    return Monster::calculateDamage();
+}
+
+
+
+//Troll class implementation
+Troll::Troll()
+    : Monster("Troll", 80, 3, 5, 40, 20) {
+        addLoot(new Weapon("Club", "A heavy wooden club", 7));
+}
+std::string Troll::getAttackMessage() const {
+    return "The troll swings its massive club at you!";
+}
+
+//Wizard class implementation
+Wizard::Wizard()
+    : Monster("Wizard", 60, 12, 2, 50, 25) {
+        addLoot(new Weapon("Magic Wand", "A slender wand with magical powers", 15));
+}
+std::string Wizard::getAttackMessage() const {
+    return "The wizard casts a spell at you, but how powerful is it?";
+}
+int Wizard::calculateDamage() const {
+    if (rand() % 3 == 0) {
+        std::cout << "The spell turns out to be powerful!" << std::endl;
+        return Monster::calculateDamage() + 10;
+    }
+    return Monster::calculateDamage();
+
 }

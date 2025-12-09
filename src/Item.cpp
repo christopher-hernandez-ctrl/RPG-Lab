@@ -33,6 +33,9 @@ Item::~Item() {
 //
 void Item::displayInfo() const {
     // TODO: Display item information
+    std::cout << "[ITEM] " << name << std::endl;
+    std::cout << "  " << description << std::endl;
+    std::cout << "  Value: " << value << std::endl;
 }
 
 
@@ -43,6 +46,7 @@ void Item::displayInfo() const {
 //
 void Item::displayBrief() const {
     // TODO: Display brief item info
+    std::cout << name << " (" << type << ")" << std::endl;
 }
 
 
@@ -74,6 +78,9 @@ Weapon::Weapon(const std::string& name, const std::string& description, int dama
 //
 void Weapon::displayInfo() const {
     // TODO: Display weapon-specific information
+    std::cout << "[WEAPON] " << getName() << std::endl;
+    std::cout << "  " << getDescription() << std::endl;
+    std::cout << "  Damage Bonus: +" << getDamageBonus() << std::endl;
 }
 
 
@@ -103,6 +110,9 @@ Armor::Armor(const std::string& name, const std::string& description, int defens
 //
 void Armor::displayInfo() const {
     // TODO: Display armor-specific information
+    std::cout << "[ARMOR] " << getName() << std::endl;
+    std::cout << "  " << getDescription() << std::endl;
+    std::cout << "  Defense Bonus: +" << getDefenseBonus() << std::endl;
 }
 
 
@@ -134,6 +144,9 @@ Consumable::Consumable(const std::string& name, const std::string& description,
 //
 void Consumable::displayInfo() const {
     // TODO: Display consumable-specific information
+    std::cout << "[CONSUMABLE] " << getName() << std::endl;
+    std::cout << "  " << getDescription() << std::endl;
+    std::cout << "  Restores: " << healing_amount << " HP" << std::endl;
 }
 
 
@@ -146,4 +159,11 @@ void Consumable::displayInfo() const {
 //
 void Consumable::use() {
     // TODO: Implement use logic
+    if (used) {
+        std::cout << getName() << " has already been used!" << std::endl;
+    } else {
+        std::cout << "Used " << getName() << "! Restored " 
+                  << healing_amount << " HP." << std::endl;
+        used = true;
+    }
 }
